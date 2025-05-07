@@ -13,4 +13,8 @@ public interface UserDtoService {
     ResponseEntity<Object> getAllUsers();
 
     ResponseEntity<Object> getAllUsersWithArchive(boolean isArchive);
+
+    ResponseEntity<Object> updateUser(Long id, UserDtoRequest request);
+
+    ResponseEntity<Object> deleteUser(Long id);
 }

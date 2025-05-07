@@ -50,7 +50,7 @@ public class UserDtoServiceImpl implements UserDtoService {
     @Override
     @Transactional(readOnly = true)
     public ResponseEntity<Object> getAllUsersWithArchive(boolean isArchive) {
-            return ResponseEntity.ok(userDtoRepository.getAllUsersWithArchive(isArchive));
+        return ResponseEntity.ok(userDtoRepository.getAllUsersWithArchive(isArchive));
     }
 
     @Override
@@ -68,5 +68,28 @@ public class UserDtoServiceImpl implements UserDtoService {
         } else {
             return ResponseEntity.badRequest().build(); //TODO need send message
         }
+    }
+
+    @Override
+    public ResponseEntity<Object> updateUser(Long id, UserDtoRequest request) {
+        Optional<User> opt = userService.findUserById(id);
+        if (opt.isPresent()) {
+            User user = opt.get();
+            user.setName(request.name());
+            user.setLastname(request.lastname());
+            user.setAge(request.age());
+            return ResponseEntity.ok(userService.save(user));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @Override
+    public ResponseEntity<Object> deleteUser(Long id) {
+        if(userService.existUserById(id)) {
+            userService.delete(id);
+            return ResponseEntity.ok().build(); //TODO
+        }
+        return ResponseEntity.badRequest().build(); //TODO
     }
 }
