@@ -20,4 +20,11 @@ public class Subscription {
 
     @ManyToMany(mappedBy = "subscriptions")
     private List<User> users;
+
+    public Subscription() {
+    }
+
+    public Subscription(String source) {
+        this.source = source;
+    }
 }

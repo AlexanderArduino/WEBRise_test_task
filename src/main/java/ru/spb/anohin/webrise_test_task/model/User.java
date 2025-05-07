@@ -30,12 +30,21 @@ public class User {
     private int age;
     private boolean is_archive;
 
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users-subscriptions",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "subscription_id"))
     private Set<Subscription> subscriptions;
+
+    public User() {
+    }
+
+    public User(String nickname, String name, String lastname, int age) {
+        this.nickname = nickname;
+        this.name = name;
+        this.lastname = lastname;
+        this.age = age;
+    }
 
     public Long getId() {
         return id;
