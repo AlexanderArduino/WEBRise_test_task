@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.spb.anohin.webrise_test_task.dto.request.SubscriptionDtoRequest;
 import ru.spb.anohin.webrise_test_task.dto.request.UserDtoRequest;
 import ru.spb.anohin.webrise_test_task.service.dto.UserDtoService;
 
@@ -60,4 +61,14 @@ public class UserController {
         return userDtoService.deleteUser(id);
     }
 
+    @GetMapping("/{id}/subscriptions")
+    public ResponseEntity<Object> getUserSubscriptionsByUserId(@PathVariable("id") Long id) {
+        return userDtoService.getUserSubscriptionsByUserId(id);
+    }
+
+    @PostMapping("/{id}/subscriptions")
+    public ResponseEntity<Object> addSubscriptionAtUser(@PathVariable("id") Long userId,
+                                                        @RequestBody SubscriptionDtoRequest request) {
+        return userDtoService.addSubscriptionAtUser(userId, request);
+    }
 }

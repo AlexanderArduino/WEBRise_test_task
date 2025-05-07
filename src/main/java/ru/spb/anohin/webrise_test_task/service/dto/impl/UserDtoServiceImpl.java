@@ -5,14 +5,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.spb.anohin.webrise_test_task.dto.request.SubscriptionDtoRequest;
 import ru.spb.anohin.webrise_test_task.dto.request.UserDtoRequest;
 import ru.spb.anohin.webrise_test_task.dto.response.UserDtoResponse;
+import ru.spb.anohin.webrise_test_task.model.Subscription;
 import ru.spb.anohin.webrise_test_task.model.User;
 import ru.spb.anohin.webrise_test_task.repository.dto.UserDtoRepository;
 import ru.spb.anohin.webrise_test_task.service.dto.UserDtoService;
+import ru.spb.anohin.webrise_test_task.service.model.SubscriptionService;
 import ru.spb.anohin.webrise_test_task.service.model.UserService;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -21,11 +25,13 @@ public class UserDtoServiceImpl implements UserDtoService {
     private static final Logger log = LoggerFactory.getLogger(UserDtoServiceImpl.class);
     private final UserDtoRepository userDtoRepository;
     private final UserService userService;
+    private final SubscriptionService subscriptionService;
 
     public UserDtoServiceImpl(UserDtoRepository userDtoRepository,
-                              UserService userService) {
+                              UserService userService, SubscriptionService subscriptionService) {
         this.userDtoRepository = userDtoRepository;
         this.userService = userService;
+        this.subscriptionService = subscriptionService;
     }
 
     @Override
@@ -86,10 +92,33 @@ public class UserDtoServiceImpl implements UserDtoService {
 
     @Override
     public ResponseEntity<Object> deleteUser(Long id) {
-        if(userService.existUserById(id)) {
+        if (userService.existUserById(id)) {
             userService.delete(id);
             return ResponseEntity.ok().build(); //TODO
         }
         return ResponseEntity.badRequest().build(); //TODO
+    }
+
+    @Override
+    public ResponseEntity<Object> getUserSubscriptionsByUserId(Long id) {
+        return ResponseEntity.ok(userDtoRepository.findUserSubscriptionsByUserId(id));
+    }
+
+    @Override
+    public ResponseEntity<Object> addSubscriptionAtUser(Long userId, SubscriptionDtoRequest request) {
+        Optional<User> opt = userService.findUserById(userId);
+        if(opt.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        Optional<Subscription> subOpt = subscriptionService.findSubscriptionById(request.id());
+        if(subOpt.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        User user = opt.get();
+        Set<Subscription> subSet = user.getSubscriptions();
+        subSet.add(subOpt.get());
+        user.setSubscriptions(subSet);
+        userService.save(user);
+        return ResponseEntity.ok(userDtoRepository.findUserSubscriptionsByUserId(userId));
     }
 }

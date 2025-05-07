@@ -2,11 +2,13 @@ package ru.spb.anohin.webrise_test_task.service.model.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.spb.anohin.webrise_test_task.model.Subscription;
 import ru.spb.anohin.webrise_test_task.model.User;
 import ru.spb.anohin.webrise_test_task.repository.model.UserRepository;
 import ru.spb.anohin.webrise_test_task.service.model.UserService;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional
