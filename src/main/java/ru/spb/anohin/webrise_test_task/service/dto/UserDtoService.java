@@ -1,8 +1,16 @@
 package ru.spb.anohin.webrise_test_task.service.dto;
-/** Author: Anohin A.I.
-email: a.i.anohin.arduino@gmail.com*/
-public class UserDtoService {
 
-UserDtoService () {}
 
+import org.springframework.http.ResponseEntity;
+import ru.spb.anohin.webrise_test_task.dto.request.UserDtoRequest;
+
+public interface UserDtoService {
+
+    ResponseEntity<Object> getUserById(Long id);
+
+    ResponseEntity<Object> saveUser(UserDtoRequest userDtoRequest);
+
+    ResponseEntity<Object> getAllUsers();
+
+    ResponseEntity<Object> getAllUsersWithArchive(boolean isArchive);
 }
