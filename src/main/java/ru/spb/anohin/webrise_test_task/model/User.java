@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 import java.util.Set;
@@ -17,8 +18,12 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator = "user-id-generator",
+            strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "user-id-generator",
+            allocationSize = 10, sequenceName = "my-user-seq-gen")
     private Long id;
+
     private String nickname;
     private String name;
     private String lastname;

@@ -31,7 +31,7 @@ public class UserDtoServiceImpl implements UserDtoService {
     @Override
     @Transactional(readOnly = true)
     public ResponseEntity<Object> getUserById(Long id) {
-        log.info(getClass().getName() + " вызван");
+        log.debug(getClass().getName() + " вызван");
         Optional<UserDtoResponse> opt = userDtoRepository.findUserById(id);
         if (opt.isPresent()) {
             return ResponseEntity.ok().body(opt.get());
@@ -43,7 +43,7 @@ public class UserDtoServiceImpl implements UserDtoService {
     @Override
     @Transactional(readOnly = true)
     public ResponseEntity<Object> getAllUsers() {
-        log.info(getClass().getName() + " вызван");
+        log.debug(getClass().getName() + " вызван");
         return ResponseEntity.ok(userDtoRepository.findAllUsers());
     }
 
@@ -55,7 +55,7 @@ public class UserDtoServiceImpl implements UserDtoService {
 
     @Override
     public ResponseEntity<Object> saveUser(UserDtoRequest request) {
-        log.info(getClass().getName() + " вызван");
+        log.debug(getClass().getName() + " вызван");
         if (!userService.existUserByNickname(request.nickname())) {
             User user = new User();
             user.setNickname(request.nickname());
