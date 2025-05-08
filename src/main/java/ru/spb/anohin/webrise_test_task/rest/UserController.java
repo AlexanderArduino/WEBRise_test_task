@@ -1,5 +1,6 @@
 package ru.spb.anohin.webrise_test_task.rest;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getUserById(@PathVariable("id") Long id) {
-        log.info("GET запрос на " + getClass() + getClass().getName());
+        log.info("GET /api/users/{} called", id);
         return userDtoService.getUserById(id);
     }
 
@@ -39,7 +40,7 @@ public class UserController {
     public ResponseEntity<Object> getAllUsers(
             @RequestParam(name = "isArchive", required = false, defaultValue = "false") boolean isArchive
     ) {
-        log.info("GET запрос на " + getClass() + getClass().getName() + Arrays.toString(getClass().getTypeParameters()));
+        log.info("Запущен метод getAllUsers");
         return userDtoService.getAllUsersWithArchive(isArchive);
     }
 
@@ -71,4 +72,6 @@ public class UserController {
                                                         @RequestBody SubscriptionDtoRequest request) {
         return userDtoService.addSubscriptionAtUser(userId, request);
     }
+
+    //TODO доделать эндпойнт для удаления подписки
 }
