@@ -121,4 +121,14 @@ public class UserDtoServiceImpl implements UserDtoService {
         userService.save(user);
         return ResponseEntity.ok(userDtoRepository.findUserSubscriptionsByUserId(userId));
     }
+
+    @Override
+    public ResponseEntity<Object> deleteSubscriptionAtUser(Long userId, Long subId) {
+        Optional<User> opt = userService.findUserById(userId);
+        if(opt.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        userService.deleteSubscriptionFromUser(userId, subId);
+        return ResponseEntity.ok(userDtoRepository.findUserById(userId));
+    }
 }

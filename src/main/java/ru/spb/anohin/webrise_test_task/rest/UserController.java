@@ -76,5 +76,10 @@ public class UserController {
         return userDtoService.addSubscriptionAtUser(userId, request);
     }
 
+    @DeleteMapping("/{id}/subscriptions/{subId}")
+    public ResponseEntity<Object> deleteSubscriptionAtUser(@PathVariable("id") Long userId,
+                                                           @PathVariable("subId") Long subId) {
+        return userDtoService.deleteSubscriptionAtUser(userId, subId);
+    }
     //TODO доделать эндпойнт для удаления подписки
 }

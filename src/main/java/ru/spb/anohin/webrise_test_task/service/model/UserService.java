@@ -20,4 +20,7 @@ public interface UserService {
 
     boolean existUserById(Long id);
 
-    void delete(Long id);}
+    void delete(Long id);
+
+    void deleteSubscriptionFromUser(Long userId, Long subId);
+}
