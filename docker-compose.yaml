@@ -27,5 +27,20 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+
+#  db_log:
+#    container_name: postgres_log
+#    image: postgres:15
+#    restart: always
+#    ports:
+#      - 5434:5432
+#    environment:
+#      POSTGRES_DB: webrise-test-task-db-log
+#      POSTGRES_USERNAME: postgres
+#      POSTGRES_PASSWORD: postgres
+#    volumes:
+#      - pgdata_log:/var/lib/postgresql/data
+
 volumes:
   pgdata:
+#  pgdata_log:
