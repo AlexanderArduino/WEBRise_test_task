@@ -40,36 +40,39 @@ public class UserController {
     public ResponseEntity<Object> getAllUsers(
             @RequestParam(name = "isArchive", required = false, defaultValue = "false") boolean isArchive
     ) {
-        log.info("Запущен метод getAllUsers");
+        log.info("GET /api/users called with parametr {}", isArchive);
         return userDtoService.getAllUsersWithArchive(isArchive);
     }
 
     @PostMapping
     public ResponseEntity<Object> saveUser(@RequestBody UserDtoRequest request) {
-        log.info("POST запрос на " + getClass() + getClass().getName());
+        log.info("POST /api/users called");
         return userDtoService.saveUser(request);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateUser(@PathVariable("id") Long id,
                                              @RequestBody UserDtoRequest request) {
-        log.info("PUT запрос на " + getClass() + getClass().getName());
+        log.info("PUT /api/users/{} called", id);
         return userDtoService.updateUser(id, request);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteUser(@PathVariable("id") Long id) {
+        log.info("DELETE /api/users/{} called", id);
         return userDtoService.deleteUser(id);
     }
 
     @GetMapping("/{id}/subscriptions")
     public ResponseEntity<Object> getUserSubscriptionsByUserId(@PathVariable("id") Long id) {
+        log.info("GET /api/users/{}/subscriptions called", id);
         return userDtoService.getUserSubscriptionsByUserId(id);
     }
 
     @PostMapping("/{id}/subscriptions")
     public ResponseEntity<Object> addSubscriptionAtUser(@PathVariable("id") Long userId,
                                                         @RequestBody SubscriptionDtoRequest request) {
+        log.info("POST /api/users/{}/subscriptions called", userId);
         return userDtoService.addSubscriptionAtUser(userId, request);
     }
 
