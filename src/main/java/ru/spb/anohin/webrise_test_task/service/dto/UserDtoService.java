@@ -24,4 +24,7 @@ public interface UserDtoService {
     ResponseEntity<Object> addSubscriptionAtUser(Long userId, SubscriptionDtoRequest request);
 
     ResponseEntity<Object> deleteSubscriptionAtUser(Long userId, Long subId);
+
+    ResponseEntity<Object> getTop3UsersSubscriptions();
+
 }
