@@ -30,8 +30,8 @@ public class LogTableInitializer {
                 log_date TIMESTAMP,
                 log_level VARCHAR(10),
                 logger VARCHAR(255),
-                message VARCHAR(255),
-                exception VARCHAR(255)
+                message TEXT,
+                exception TEXT
             )
             """;
 

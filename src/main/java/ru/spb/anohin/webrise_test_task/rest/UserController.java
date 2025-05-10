@@ -1,8 +1,6 @@
 package ru.spb.anohin.webrise_test_task.rest;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,13 +15,10 @@ import ru.spb.anohin.webrise_test_task.dto.request.SubscriptionDtoRequest;
 import ru.spb.anohin.webrise_test_task.dto.request.UserDtoRequest;
 import ru.spb.anohin.webrise_test_task.service.dto.UserDtoService;
 
-import java.util.Arrays;
-
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserDtoService userDtoService;
 
     public UserController(UserDtoService userDtoService) {
