@@ -69,4 +69,9 @@ public class UserController {
                                                            @PathVariable("subId") Long subId) {
         return userDtoService.deleteSubscriptionAtUser(userId, subId);
     }
+
+    @GetMapping("/subscriptions/top3")
+    public ResponseEntity<Object> getTop3UsersSubscriptions() {
+        return userDtoService.getTop3UsersSubscriptions();
+    }
 }

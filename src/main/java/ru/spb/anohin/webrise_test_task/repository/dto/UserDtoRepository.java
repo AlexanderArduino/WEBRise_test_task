@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.spb.anohin.webrise_test_task.dto.response.SubscriptionDtoResponse;
+import ru.spb.anohin.webrise_test_task.dto.response.SubscriptionTop3DtoResponse;
 import ru.spb.anohin.webrise_test_task.dto.response.UserDtoResponse;
 import ru.spb.anohin.webrise_test_task.model.User;
 
@@ -79,4 +80,18 @@ public interface UserDtoRepository extends JpaRepository<User, Long> {
             WHERE u.id = :id
             """)
     Set<SubscriptionDtoResponse> findUserSubscriptionsByUserId(Long id);
+
+
+    @Query(value = """
+            SELECT s.id as id,
+                   s.source as name,
+                   count(u.id) as count
+            FROM subscriptions s
+            JOIN "users-subscriptions" us on s.id = us.subscription_id
+            JOIN users u on us.user_id = u.id
+            GROUP BY s.id, s.source
+            ORDER BY count DESC
+            LIMIT 3
+            """, nativeQuery = true)
+    List<SubscriptionTop3DtoResponse> getTop3UsersSubscriptions();
 }
