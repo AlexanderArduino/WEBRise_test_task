@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(Long id) {
-        User user = userRepository.findById(id).get(); //TODO
+        User user = userRepository.findById(id).get();
         user.setIs_archive(true);
         userRepository.save(user);
     }
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteSubscriptionFromUser(Long userId, Long subId) {
         User user = userRepository.findById(userId).get();
-        Subscription subscription = subscriptionService.findSubscriptionById(subId).get(); //TODO
+        Subscription subscription = subscriptionService.findSubscriptionById(subId).get();
         Set<Subscription> subSet = user.getSubscriptions();
         subSet.remove(subscription);
         user.setSubscriptions(subSet);
