@@ -14,7 +14,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/api/users/1"
+						"url": "http://localhost:9999/api/users/1"
 					},
 					"response": []
 				},
@@ -32,7 +32,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/api/users"
+						"url": "http://localhost:9999/api/users"
 					},
 					"response": []
 				},
@@ -42,12 +42,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/users",
+							"raw": "http://localhost:9999/api/users",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "9999",
 							"path": [
 								"api",
 								"users"
@@ -77,7 +77,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/api/users/12"
+						"url": "http://localhost:9999/api/users/12"
 					},
 					"response": []
 				},
@@ -86,7 +86,7 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "http://localhost:8080/api/users/6"
+						"url": "http://localhost:9999/api/users/6"
 					},
 					"response": []
 				}
@@ -101,12 +101,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/users/1/subscriptions",
+							"raw": "http://localhost:9999/api/users/1/subscriptions",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "9999",
 							"path": [
 								"api",
 								"users",
@@ -139,12 +139,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/users/1/subscriptions",
+							"raw": "http://localhost:9999/api/users/1/subscriptions",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "9999",
 							"path": [
 								"api",
 								"users",
@@ -168,12 +168,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/users/1/subscriptions/3",
+							"raw": "http://localhost:9999/api/users/1/subscriptions/3",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "9999",
 							"path": [
 								"api",
 								"users",
@@ -197,7 +197,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/api/users/subscriptions/top3"
+						"url": "http://localhost:9999/api/users/subscriptions/top3"
 					},
 					"response": []
 				}
