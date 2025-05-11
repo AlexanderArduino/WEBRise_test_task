@@ -11,8 +11,6 @@ public interface UserDtoService {
 
     ResponseEntity<Object> saveUser(UserDtoRequest userDtoRequest);
 
-    ResponseEntity<Object> getAllUsers();
-
     ResponseEntity<Object> getAllUsersWithArchive(boolean isArchive);
 
     ResponseEntity<Object> updateUser(Long id, UserDtoRequest request);

@@ -1,12 +1,11 @@
 package ru.spb.anohin.webrise_test_task.service.dto.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.spb.anohin.webrise_test_task.dto.request.SubscriptionDtoRequest;
 import ru.spb.anohin.webrise_test_task.dto.request.UserDtoRequest;
+import ru.spb.anohin.webrise_test_task.dto.response.ErrorDtoResponse;
 import ru.spb.anohin.webrise_test_task.dto.response.UserDtoResponse;
 import ru.spb.anohin.webrise_test_task.model.Subscription;
 import ru.spb.anohin.webrise_test_task.model.User;
@@ -15,6 +14,7 @@ import ru.spb.anohin.webrise_test_task.service.dto.UserDtoService;
 import ru.spb.anohin.webrise_test_task.service.model.SubscriptionService;
 import ru.spb.anohin.webrise_test_task.service.model.UserService;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Set;
 
@@ -22,7 +22,6 @@ import java.util.Set;
 @Transactional
 public class UserDtoServiceImpl implements UserDtoService {
 
-    private static final Logger log = LoggerFactory.getLogger(UserDtoServiceImpl.class);
     private final UserDtoRepository userDtoRepository;
     private final UserService userService;
     private final SubscriptionService subscriptionService;
@@ -37,20 +36,15 @@ public class UserDtoServiceImpl implements UserDtoService {
     @Override
     @Transactional(readOnly = true)
     public ResponseEntity<Object> getUserById(Long id) {
-        log.debug(getClass().getName() + " вызван");
         Optional<UserDtoResponse> opt = userDtoRepository.findUserById(id);
         if (opt.isPresent()) {
             return ResponseEntity.ok().body(opt.get());
         } else {
-            return ResponseEntity.badRequest().build(); //TODO вставить текст сообщения
+            return ResponseEntity.badRequest().body(new ErrorDtoResponse(
+                    400,
+                    "Пользователь с указанным ID не найден",
+                    LocalDateTime.now()));
         }
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public ResponseEntity<Object> getAllUsers() {
-        log.debug(getClass().getName() + " вызван");
-        return ResponseEntity.ok(userDtoRepository.findAllUsers());
     }
 
     @Override
@@ -61,7 +55,6 @@ public class UserDtoServiceImpl implements UserDtoService {
 
     @Override
     public ResponseEntity<Object> saveUser(UserDtoRequest request) {
-        log.debug(getClass().getName() + " вызван");
         if (!userService.existUserByNickname(request.nickname())) {
             User user = new User();
             user.setNickname(request.nickname());
@@ -72,7 +65,10 @@ public class UserDtoServiceImpl implements UserDtoService {
             userService.save(user);
             return ResponseEntity.ok(userDtoRepository.findUserByNickname(request.nickname()));
         } else {
-            return ResponseEntity.badRequest().build(); //TODO need send message
+            return ResponseEntity.badRequest().body(new ErrorDtoResponse(
+                    400,
+                    "Данный nickname уже занят. Используйте другой",
+                    LocalDateTime.now()));
         }
     }
 
@@ -86,7 +82,10 @@ public class UserDtoServiceImpl implements UserDtoService {
             user.setAge(request.age());
             return ResponseEntity.ok(userService.save(user));
         } else {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(new ErrorDtoResponse(
+                    400,
+                    "Пользователь с указанным ID не найден",
+                    LocalDateTime.now()));
         }
     }
 
@@ -94,9 +93,15 @@ public class UserDtoServiceImpl implements UserDtoService {
     public ResponseEntity<Object> deleteUser(Long id) {
         if (userService.existUserById(id)) {
             userService.delete(id);
-            return ResponseEntity.ok().build(); //TODO
+            return ResponseEntity.ok().body(new ErrorDtoResponse(
+                    200,
+                    "Пользователь успешно удален",
+                    LocalDateTime.now()));
         }
-        return ResponseEntity.badRequest().build(); //TODO
+        return ResponseEntity.badRequest().body(new ErrorDtoResponse(
+                400,
+                "Пользователь с указанным ID не найден",
+                LocalDateTime.now()));
     }
 
     @Override
@@ -108,11 +113,19 @@ public class UserDtoServiceImpl implements UserDtoService {
     public ResponseEntity<Object> addSubscriptionAtUser(Long userId, SubscriptionDtoRequest request) {
         Optional<User> opt = userService.findUserById(userId);
         if (opt.isEmpty()) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(new ErrorDtoResponse(
+                    400,
+                    "Не верно указан ID пользователя",
+                    LocalDateTime.now()
+            ));
         }
         Optional<Subscription> subOpt = subscriptionService.findSubscriptionById(request.id());
         if (subOpt.isEmpty()) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(new ErrorDtoResponse(
+                    400,
+                    "Не верно указан ID подписки",
+                    LocalDateTime.now()
+            ));
         }
         User user = opt.get();
         Set<Subscription> subSet = user.getSubscriptions();
@@ -126,7 +139,12 @@ public class UserDtoServiceImpl implements UserDtoService {
     public ResponseEntity<Object> deleteSubscriptionAtUser(Long userId, Long subId) {
         Optional<User> opt = userService.findUserById(userId);
         if (opt.isEmpty()) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(new ErrorDtoResponse(
+                            400,
+                            "Пользователь не найден",
+                            LocalDateTime.now()
+                    )
+            );
         }
         userService.deleteSubscriptionFromUser(userId, subId);
         return ResponseEntity.ok(userDtoRepository.findUserById(userId));

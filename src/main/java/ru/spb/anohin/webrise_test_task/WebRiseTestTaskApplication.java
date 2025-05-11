@@ -9,5 +9,4 @@ public class WebRiseTestTaskApplication {
     public static void main(String[] args) {
         SpringApplication.run(WebRiseTestTaskApplication.class, args);
     }
-//TODO вернуть обратно в application.yaml сохранение БД
 }
