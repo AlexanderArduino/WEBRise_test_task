@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="info">
     <Appenders>
-        <!-- JDBC Appender для PostgreSQL -->
-        <JDBC name="databaseAppender" tableName="application_logs">
-            <ConnectionFactory class="ru.spb.anohin.webrise_test_task.config.loggercfg.ConnectionLoggerToDatabase" method="getLoggingPostgresqlBaseConnection"/>
-            <Column name="log_date" isEventTimestamp="true" isUnicode="false"/>
-            <Column name="log_level" pattern="%level" isUnicode="false"/>
-            <Column name="logger" pattern="%logger" isUnicode="false"/>
-            <Column name="message" pattern="%message" isUnicode="false"/>
-            <Column name="exception" pattern="%ex{full}" isUnicode="false"/>
-        </JDBC>
+<!--        &lt;!&ndash; JDBC Appender для PostgreSQL &ndash;&gt;-->
+<!--        <JDBC name="databaseAppender" tableName="application_logs">-->
+<!--            <ConnectionFactory class="ru.spb.anohin.webrise_test_task.config.loggercfg.ConnectionLoggerToDatabase" method="getLoggingPostgresqlBaseConnection"/>-->
+<!--            <Column name="log_date" isEventTimestamp="true" isUnicode="false"/>-->
+<!--            <Column name="log_level" pattern="%level" isUnicode="false"/>-->
+<!--            <Column name="logger" pattern="%logger" isUnicode="false"/>-->
+<!--            <Column name="message" pattern="%message" isUnicode="false"/>-->
+<!--            <Column name="exception" pattern="%ex{full}" isUnicode="false"/>-->
+<!--        </JDBC>-->
 
         <!-- Консольный аппендер для отладки -->
         <Console name="Console" target="SYSTEM_OUT">
@@ -35,7 +35,7 @@
 
     <Loggers>
         <Root level="info">
-            <AppenderRef ref="databaseAppender"/>
+<!--            <AppenderRef ref="databaseAppender"/>-->
             <AppenderRef ref="Console"/>
             <AppenderRef ref="FileAppender"/>
         </Root>
