@@ -1,41 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="info">
     <Appenders>
-<!--        &lt;!&ndash; JDBC Appender для PostgreSQL &ndash;&gt;-->
-<!--        <JDBC name="databaseAppender" tableName="application_logs">-->
-<!--            <ConnectionFactory class="ru.spb.anohin.webrise_test_task.config.loggercfg.ConnectionLoggerToDatabase" method="getLoggingPostgresqlBaseConnection"/>-->
-<!--            <Column name="log_date" isEventTimestamp="true" isUnicode="false"/>-->
-<!--            <Column name="log_level" pattern="%level" isUnicode="false"/>-->
-<!--            <Column name="logger" pattern="%logger" isUnicode="false"/>-->
-<!--            <Column name="message" pattern="%message" isUnicode="false"/>-->
-<!--            <Column name="exception" pattern="%ex{full}" isUnicode="false"/>-->
-<!--        </JDBC>-->
 
-        <!-- Консольный аппендер для отладки -->
+        <!-- Запись в консоль -->
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
 
-        <!-- File Appender для записи в файл -->
+        <!-- Запись в файл -->
         <RollingFile name="FileAppender" fileName="logs/application.log"
                      filePattern="logs/application-%d{yyyy-MM-dd}-%i.log">
             <PatternLayout>
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Pattern>
             </PatternLayout>
             <Policies>
-                <!-- Ротация каждый день -->
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
-                <!-- Ротация при достижении размера файла 10MB -->
                 <SizeBasedTriggeringPolicy size="10 MB"/>
             </Policies>
-            <!-- Хранение до 7 файлов -->
             <DefaultRolloverStrategy max="7"/>
         </RollingFile>
     </Appenders>
 
     <Loggers>
         <Root level="info">
-<!--            <AppenderRef ref="databaseAppender"/>-->
             <AppenderRef ref="Console"/>
             <AppenderRef ref="FileAppender"/>
         </Root>

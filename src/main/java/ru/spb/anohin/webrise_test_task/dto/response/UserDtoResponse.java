@@ -1,11 +1,6 @@
 package ru.spb.anohin.webrise_test_task.dto.response;
 
-import ru.spb.anohin.webrise_test_task.model.Subscription;
-
-import java.util.Set;
-
 /**
- *
  * @param id
  * @param nickname
  * @param name

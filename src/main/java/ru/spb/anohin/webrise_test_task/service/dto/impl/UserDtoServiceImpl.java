@@ -107,11 +107,11 @@ public class UserDtoServiceImpl implements UserDtoService {
     @Override
     public ResponseEntity<Object> addSubscriptionAtUser(Long userId, SubscriptionDtoRequest request) {
         Optional<User> opt = userService.findUserById(userId);
-        if(opt.isEmpty()) {
+        if (opt.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
         Optional<Subscription> subOpt = subscriptionService.findSubscriptionById(request.id());
-        if(subOpt.isEmpty()) {
+        if (subOpt.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
         User user = opt.get();
@@ -125,7 +125,7 @@ public class UserDtoServiceImpl implements UserDtoService {
     @Override
     public ResponseEntity<Object> deleteSubscriptionAtUser(Long userId, Long subId) {
         Optional<User> opt = userService.findUserById(userId);
-        if(opt.isEmpty()) {
+        if (opt.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
         userService.deleteSubscriptionFromUser(userId, subId);

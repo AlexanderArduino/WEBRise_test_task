@@ -1,77 +1,32 @@
 package ru.spb.anohin.webrise_test_task.rest;
 
-
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import ru.spb.anohin.webrise_test_task.dto.request.SubscriptionDtoRequest;
 import ru.spb.anohin.webrise_test_task.dto.request.UserDtoRequest;
-import ru.spb.anohin.webrise_test_task.service.dto.UserDtoService;
 
-@RestController
-@RequestMapping("/api/users")
-public class UserController {
+public interface UserController {
 
-    private final UserDtoService userDtoService;
+    ResponseEntity<Object> getUserById(@PathVariable("id") Long id);
 
-    public UserController(UserDtoService userDtoService) {
-        this.userDtoService = userDtoService;
-    }
+    ResponseEntity<Object> getAllUsers(@RequestParam(name = "isArchive", required = false, defaultValue = "false") boolean isArchive);
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getUserById(@PathVariable("id") Long id) {
-        return userDtoService.getUserById(id);
-    }
+    ResponseEntity<Object> saveUser(@RequestBody UserDtoRequest request);
 
-    @GetMapping
-    public ResponseEntity<Object> getAllUsers(
-            @RequestParam(name = "isArchive", required = false, defaultValue = "false") boolean isArchive
-    ) {
-        return userDtoService.getAllUsersWithArchive(isArchive);
-    }
+    ResponseEntity<Object> updateUser(@PathVariable("id") Long id,
+                                      @RequestBody UserDtoRequest request);
 
-    @PostMapping
-    public ResponseEntity<Object> saveUser(@RequestBody UserDtoRequest request) {
-        return userDtoService.saveUser(request);
-    }
+    ResponseEntity<Object> deleteUser(@PathVariable("id") Long id);
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateUser(@PathVariable("id") Long id,
-                                             @RequestBody UserDtoRequest request) {
-        return userDtoService.updateUser(id, request);
-    }
+    ResponseEntity<Object> getUserSubscriptionsByUserId(@PathVariable("id") Long id);
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteUser(@PathVariable("id") Long id) {
-        return userDtoService.deleteUser(id);
-    }
+    ResponseEntity<Object> addSubscriptionAtUser(@PathVariable("id") Long userId,
+                                                 @RequestBody SubscriptionDtoRequest request);
 
-    @GetMapping("/{id}/subscriptions")
-    public ResponseEntity<Object> getUserSubscriptionsByUserId(@PathVariable("id") Long id) {
-        return userDtoService.getUserSubscriptionsByUserId(id);
-    }
+    ResponseEntity<Object> deleteSubscriptionAtUser(@PathVariable("id") Long userId,
+                                                    @PathVariable("subId") Long subId);
 
-    @PostMapping("/{id}/subscriptions")
-    public ResponseEntity<Object> addSubscriptionAtUser(@PathVariable("id") Long userId,
-                                                        @RequestBody SubscriptionDtoRequest request) {
-        return userDtoService.addSubscriptionAtUser(userId, request);
-    }
-
-    @DeleteMapping("/{id}/subscriptions/{subId}")
-    public ResponseEntity<Object> deleteSubscriptionAtUser(@PathVariable("id") Long userId,
-                                                           @PathVariable("subId") Long subId) {
-        return userDtoService.deleteSubscriptionAtUser(userId, subId);
-    }
-
-    @GetMapping("/subscriptions/top3")
-    public ResponseEntity<Object> getTop3UsersSubscriptions() {
-        return userDtoService.getTop3UsersSubscriptions();
-    }
+    ResponseEntity<Object> getTop3UsersSubscriptions();
 }

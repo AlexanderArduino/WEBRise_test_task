@@ -1,7 +1,6 @@
 package ru.spb.anohin.webrise_test_task.init;
 
 import jakarta.annotation.PostConstruct;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.spb.anohin.webrise_test_task.model.Subscription;
@@ -9,9 +8,7 @@ import ru.spb.anohin.webrise_test_task.model.User;
 import ru.spb.anohin.webrise_test_task.repository.model.SubscriptionRepository;
 import ru.spb.anohin.webrise_test_task.repository.model.UserRepository;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Component
